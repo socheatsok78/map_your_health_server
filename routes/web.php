@@ -23,3 +23,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/hf', 'HFController@index')->name('data');
+Route::get('/hfdata', 'HFController@hfdata')->name('hfdata');

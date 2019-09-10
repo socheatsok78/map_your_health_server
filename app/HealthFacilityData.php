@@ -64,4 +64,8 @@ class HealthFacilityData extends Model
         logger('resolveRouteBinding');
         return $this->where('id', '=', $value)->first() ?? abort(404);
     }
+
+    public function gazetteer() {
+        return $this->hasOne('App\Gazetteer','code','village_code');
+    }
 }
