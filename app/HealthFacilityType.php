@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class HealthFacilityType extends Model
 {
 
-    protected $table = 'health_fac_type';
+    protected $table = 'health_facility_types';
     protected $primaryKey = 'HFT_Code';
     public $incrementing = false;
 
