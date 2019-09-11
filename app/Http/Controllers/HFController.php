@@ -25,8 +25,7 @@ class HFController extends Controller
      */
     public function hfdata()
     {
-        $data = HealthFacilityData::with('facility.facility_type')->with('gazetteer')->get();
-        logger($data);
+        $data = HealthFacilityData::with(['facility.facility_type', 'facility.operational_district', 'gazetteer'])->get();
         return Datatables::of($data)->make(true);
     }
 }

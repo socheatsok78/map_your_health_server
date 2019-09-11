@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Health Facility Location Datal</title>
 
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Kantumruy&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
@@ -18,6 +20,7 @@
     <![endif]-->
     <style>
         body {
+            font-family: 'Kantumruy', sans-serif;
             padding-top: 40px;
         }
     </style>
