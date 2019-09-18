@@ -24,15 +24,14 @@ class LoginController extends Controller
     {
         $inputs = collect($request->validated());
 
-        $email = $inputs->get('username');
+        $username = $inputs->get('username');
 
         $password  = $inputs->get('password');
 
-        $status = Auth::attempt(['email' => $email, 'password' => $password]);
+        $status = Auth::attempt(['username' => $username, 'password' => $password]);
 
         if ($status) {
-            $user = Auth::user();
-            return $user;
+            return Auth::user();
         } else {
             abort(403, "Error Processing Request");
         }
