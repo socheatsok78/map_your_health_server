@@ -63,6 +63,7 @@ services:
     networks:
       - backend
 
+  # Redis Service
   redis:
     container_name: redis
     image: redis:4-alpine
