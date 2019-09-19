@@ -69,7 +69,9 @@ services:
     ports:
       - 16379:6379
     volumes:
-      - redis:/data
+      - ./.services/redis:/data
+    networks:
+      - backend
 
 #Docker Networks
 networks:
