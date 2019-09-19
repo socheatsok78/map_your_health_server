@@ -19,7 +19,7 @@ services:
     networks:
       - app-network
 
-  # Nginx SErvice
+  # Nginx Service
   webserver:
     image: nginx:alpine
     container_name: webserver

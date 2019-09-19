@@ -7,15 +7,16 @@ COPY composer.lock composer.json /var/www/
 WORKDIR /var/www
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update --fix-missing
+RUN apt-get install -y \
     build-essential \
-    mysql-client \
     libpng-dev \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     locales \
     zip \
     jpegoptim optipng pngquant gifsicle \
+    nano \
     vim \
     unzip \
     git \
