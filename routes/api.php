@@ -13,9 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', 'Api\Auth\LoginController@login');
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', 'Api\Auth\LoginController@user');
+
+    Route::apiResource('/health-facility-data', 'Api\HealthFacilityDataController')->middleware(['throttle:100,1']);
 });
-
-
-Route::apiResource('health-facility-data', 'Api\HealthFacilityDataController');
