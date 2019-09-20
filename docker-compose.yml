@@ -14,7 +14,6 @@ services:
       - redis
       - mysql
     environment:
-      CONTAINER_ROLE: app
       SERVICE_NAME: app
       SERVICE_TAG: dev
       # Application
@@ -32,7 +31,7 @@ services:
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: your_mysql_root_password
-      # Broadcast
+      # Broadcast & Cache
       BROADCAST_DRIVER: log
       CACHE_DRIVER: redis
       QUEUE_DRIVER: redis
@@ -87,6 +86,7 @@ services:
   redis:
     container_name: redis
     image: redis:4-alpine
+    restart: unless-stopped
     ports:
       - 16379:6379
     environment:
@@ -94,6 +94,54 @@ services:
       SERVICE_NAME: redis
     volumes:
       - ./.data/redis:/data
+    networks:
+      - backend
+
+  scheduler:
+    image: "digitalocean.com/php"
+    container_name: scheduler
+    depends_on:
+      - app
+    volumes:
+      - .:/var/www/
+    environment:
+      SERVICE_NAME: scheduler
+      SERVICE_TAG: dev
+      # Application
+      APP_NAME: Laravel
+      APP_ENV: local
+      APP_KEY: "base64:EbCUbb8DKElCF1f1tF+PTrYdheNOpF0MVO+r0pXV+eY="
+      APP_DEBUG: "true"
+      APP_URL: http://localhost
+      # Broadcast & Cache
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+    networks:
+      - backend
+
+  queue:
+    image: "digitalocean.com/php"
+    container_name: queue
+    depends_on:
+      - app
+    volumes:
+      - .:/var/www/
+    environment:
+      SERVICE_NAME: queue
+      SERVICE_TAG: dev
+      # Application
+      APP_NAME: Laravel
+      APP_ENV: local
+      APP_KEY: "base64:EbCUbb8DKElCF1f1tF+PTrYdheNOpF0MVO+r0pXV+eY="
+      APP_DEBUG: "true"
+      APP_URL: http://localhost
+      # Broadcast & Cache
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
     networks:
       - backend
 

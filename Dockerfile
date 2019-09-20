@@ -1,10 +1,16 @@
 FROM php:7.2-fpm
 
+# Copy application service to /usr/local/bin
+COPY .services/app/service.sh /usr/local/bin/app-service.sh
+
 # Copy composer.lock and composer.json
 COPY composer.lock composer.json /var/www/
 
 # Set working directory
 WORKDIR /var/www
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies
 RUN apt-get update --fix-missing
@@ -47,6 +53,8 @@ COPY --chown=www:www . /var/www
 # Change current user to www
 USER www
 
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
+# CMD ["php-fpm"]
+CMD ["/usr/local/bin/app-service.sh"]
