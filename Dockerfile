@@ -2,6 +2,7 @@ FROM php:7.2-fpm
 
 # Copy application service to /usr/local/bin
 COPY .services/app/service.sh /usr/local/bin/app-service.sh
+RUN chmod +x /usr/local/bin/app-service.sh
 
 # Copy composer.lock and composer.json
 COPY composer.lock composer.json /var/www/
@@ -24,7 +25,6 @@ RUN apt-get install -y \
     zip \
     jpegoptim optipng pngquant gifsicle \
     nano \
-    vim \
     unzip \
     git \
     curl
