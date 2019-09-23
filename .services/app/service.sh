@@ -19,7 +19,8 @@ if [ "$role" = "app" ]; then
 elif [ "$role" = "queue" ]; then
 
     echo "Starting Queue Service..."
-    php artisan queue:work --verbose
+    php artisan horizon --verbose
+    # php artisan queue:work --verbose
 
 elif [ "$role" = "scheduler" ]; then
 
