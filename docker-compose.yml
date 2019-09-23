@@ -48,6 +48,7 @@ services:
       - ./.services/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - backend
+      - elastic
 
   # Nginx Service
   server:
@@ -147,22 +148,53 @@ services:
 
   elasticsearch:
     image: elasticsearch:7.3.2
+    container_name: elasticsearch1
+    environment:
+      - node.name=elasticsearch1
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=elasticsearch1
+      - bootstrap.memory_lock=true
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - network.host=_eth0_
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
     ports:
       - "9200:9200"
+      - "9300:9300"
     volumes:
-      - ./data/esdata/:/usr/share/elasticsearch/data/
+      - ./.data/elasticsearch/:/usr/share/elasticsearch/data/
+    networks:
+      - elastic
 
   kibana:
     image: kibana:7.3.2
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
     ports:
       - "5601:5601"
     environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      SERVER_NAME: localhost
+      ELASTICSEARCH_URL: http://elasticsearch1:9200
+    networks:
+      - elastic
 
 #Docker Networks
 networks:
   backend:
     driver: bridge
+  elastic:
 
 #Volumes
 volumes:
